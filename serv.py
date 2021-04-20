@@ -1,8 +1,11 @@
+import paho.mqtt.client as mqtt
 import socket
 
 servidor = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
 servidor.bind(("", 33000))
+
+client = mqtt.Client()
+client.connect("localhost", 1883, 60)
 
 lista = []
 listaA = []
@@ -17,7 +20,7 @@ while True:
 
     msg = mensagem_resposta
     
-    if (msg == "xbreak"):
+    if (msg == "break"):
         break
     else:
         lista.append(msg)
@@ -25,25 +28,34 @@ while True:
 
 for i in range(len(lista)):
     if "x" in lista[i]:
-        listaA.append(lista[i])
+        v = lista[i].replace('x', '')
+        listaA.append(v)
     else:
         listaB.append(lista[i])
 
 
-print("Tamanho da lista A:", len(listaA))
-print(listaA)
+resultadoA = []
+resultadoB = []
 
-print(" ")
-print(" ")
-print(" ")
+for i in range(len(listaA)):
+    soma = int(listaA[i]) + int(listaB[i])
+    resultadoA.append(soma)
 
-print("Tamanho da Lista B:", len(listaB))
-print(listaB)
 
-tamanhoTotal = len(listaA) + len(listaB)
+for i in range(len(listaB)):
+    dif = int(listaA[i]) - int(listaB[i])
+    resultadoB.append(dif)
 
-print(" ")
-print(" ")
-print(" ")
 
-print('Tamanho total: ', tamanhoTotal)
+strResultadoA = str(resultadoA)
+strResultadoB = str(resultadoB)
+
+
+client.publish("soma", strResultadoA)
+client.publish("diferenca", strResultadoB)
+
+
+
+
+    # client.publish("soma", resultadoA)
+    # client.publish("diferenca", resultadoB)

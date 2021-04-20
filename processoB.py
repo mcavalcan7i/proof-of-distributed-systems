@@ -105,6 +105,7 @@ else:
 
 print("Tamanh do Resultado final: ", len(teste2))
 print("Resultado Final: ")
+teste2.append("break")
 print(teste2)
 
 for i in range(len(teste2)):
