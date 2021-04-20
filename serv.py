@@ -17,20 +17,33 @@ while True:
 
     msg = mensagem_resposta
     
-    if (msg == "break"):
+    if (msg == "xbreak"):
         break
     else:
         lista.append(msg)
 
 
 for i in range(len(lista)):
-    val = lista[i]
-    if ('x' in val):
-        listaA.append(val)
+    if "x" in lista[i]:
+        listaA.append(lista[i])
     else:
-        listaB.append(val)
+        listaB.append(lista[i])
 
 
+print("Tamanho da lista A:", len(listaA))
 print(listaA)
-print("-----------------------")
+
+print(" ")
+print(" ")
+print(" ")
+
+print("Tamanho da Lista B:", len(listaB))
 print(listaB)
+
+tamanhoTotal = len(listaA) + len(listaB)
+
+print(" ")
+print(" ")
+print(" ")
+
+print('Tamanho total: ', tamanhoTotal)

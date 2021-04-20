@@ -3,8 +3,15 @@ import socket
 
 cliente = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-listaB = " "
+
+listaA = " "
 teste = []
+
+## Novas variaveis ##
+valores = []
+teste2 = []
+op = ""
+valorAplicar = 0
 
 
 def on_connect(client, userdata, flags, rc):
@@ -15,8 +22,9 @@ def on_connect(client, userdata, flags, rc):
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg): 
-    listaB = msg.topic+" >>> "+str(msg.payload)
-    teste.append(listaB)
+    # print(msg.topic+" >>> "+str(msg.payload))
+    listaA = str(msg.payload)
+    teste.append(listaA)
 
     if (len(teste) >= 2):
         client.disconnect()
@@ -28,60 +36,83 @@ if __name__ == '__main__':
     client.on_message = on_message
     client.loop_forever()
 
-arrayB = []
-operacaoB = []
 
-for i in range(len(teste[0])):
-    if (teste[0][i].isdigit()):
-        arrayB.append(teste[0][i])
+print("Array Recebido:")
+print(teste)
+print("_____________________")
 
-for i in range(len(teste[1])): #16 17
-    if (i == 16 or i == 17):
-        operacaoB.append(teste[1][i])
+arrayValores = teste[0]
+operacoes = teste[1]
 
-print(arrayB)
-print("-----------------")
-print(operacaoB)
+arrayValores = arrayValores.replace('b', '')
+arrayValores = arrayValores.replace("'", '')
+arrayValores = arrayValores.replace('[', '')
+arrayValores = arrayValores.replace(']', '')
+arrayValores = arrayValores.replace(',', '')
+
+teste2 = arrayValores.split()
+
+print("Array Limpo: ")
+print("Tamanho do Array Limpo: ", len(teste2))
+print(teste2)
+print("_____________________")
+
+operacoes = operacoes.replace('b', '')
+operacoes = operacoes.replace("'", '')
+
+print("Operação: ", operacoes)
+
+if "/" in operacoes:
+    op = "/"
+    operacoes = operacoes.replace("/", '')
+elif "+" in operacoes:
+    op = "+"
+    operacoes = operacoes.replace("+", '')
+elif "*" in operacoes:
+    op = "*"
+    operacoes = operacoes.replace("*", '')
+elif "-" in operacoes:
+    op = "-"
+    operacoes = operacoes.replace("-", '')
+else:
+    op = "^"
+    operacoes = operacoes.replace("^", '')
+
+valorAplicar = int(operacoes)
+
+print("Valor aplicar: ", valorAplicar)
+print("_______________________________")
+
+for i in range(len(teste2)):
+    teste2[i] = int(teste2[i])
+
+if (op == "+"):
+    for i in range(len(teste2)):
+        teste2[i] += valorAplicar
+elif (op == "-"):
+    for i in range(len(teste2)):
+        teste2[i] -= valorAplicar
+elif (op == "*"):
+    for i in range(len(teste2)):
+        teste2[i] *= valorAplicar
+elif (op == "/"):
+    for i in range(len(teste2)):
+        teste2[i] /= valorAplicar
+else:
+    for i in range(len(teste2)):
+        teste2[i] = (teste2[i] ** valorAplicar)
 
 
-for i in range(len(arrayB)):
-    if (arrayB[i] != 'VetorB'):
-        arrayB[i] = int(arrayB[i])
+print("Tamanh do Resultado final: ", len(teste2))
+print("Resultado Final: ")
+print(teste2)
 
-operacaoB[1] = int(operacaoB[1])
-
-if (operacaoB[0] == "+"):
-    for i in range(len(arrayB)):
-        if (arrayB[i] != "VetorB"):
-            arrayB[i] += operacaoB[1]
-elif (operacaoB[0] == "-"):
-    for i in range(len(arrayB)):
-        if (arrayB[i] != "VetorB"):
-            arrayB[i] -= operacaoB[1]
-elif (operacaoB[0] == "*"):
-    for i in range(len(arrayB)):
-        if (arrayB[i] != "VetorB"):
-            arrayB[i] *= operacaoB[1]
-elif (operacaoB[0] == "/"):
-    for i in range(len(arrayB)):
-        if (arrayB[i] != "VetorB"):
-            arrayB[i] /= operacaoB[1]
-elif (operacaoB[0] == "^"):
-    for i in range(len(arrayB)):
-        if (arrayB[i] != "VetorB"):
-            arrayB[i] = (arrayB[i] ** operacaoB[1])
-
-
-print(arrayB)
-print("-----------------")
-print(len(arrayB))
-
-arrayB.append("break")
+for i in range(len(teste2)):
+    teste2[i] = str(teste2[i])
 
 while True:
-    for i in range(len(arrayB)):
-        valor = str(arrayB[i])
-        mensagem_envio = valor
+    for i in range(len(teste2)):
+        mensagem_envio = teste2[i]
         cliente.sendto(mensagem_envio.encode(), ("localhost", 33000))
         mensagem_bytes, endereco_ip_servidor = cliente.recvfrom(2048)
 
