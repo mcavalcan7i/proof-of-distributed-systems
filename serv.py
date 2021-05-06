@@ -53,9 +53,3 @@ strResultadoB = str(resultadoB)
 
 client.publish("soma", strResultadoA)
 client.publish("diferenca", strResultadoB)
-
-
-
-
-    # client.publish("soma", resultadoA)
-    # client.publish("diferenca", resultadoB)

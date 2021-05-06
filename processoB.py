@@ -15,13 +15,13 @@ valorAplicar = 0
 
 
 def on_connect(client, userdata, flags, rc):
-        print("Connected with result code "+str(rc))
-        client.subscribe ("vetorB")
-        client.subscribe ("operacaoB")
+    print("Connected with result code "+str(rc))
+    client.subscribe("vetorB")
+    client.subscribe("operacaoB")
 
 
 # The callback for when a PUBLISH message is received from the server.
-def on_message(client, userdata, msg): 
+def on_message(client, userdata, msg):
     # print(msg.topic+" >>> "+str(msg.payload))
     listaA = str(msg.payload)
     teste.append(listaA)
@@ -29,9 +29,10 @@ def on_message(client, userdata, msg):
     if (len(teste) >= 2):
         client.disconnect()
 
+
 if __name__ == '__main__':
     client = mqtt.Client()
-    client.connect ("localhost", 1883, 60)
+    client.connect("localhost", 1883, 60)
     client.on_connect = on_connect
     client.on_message = on_message
     client.loop_forever()
