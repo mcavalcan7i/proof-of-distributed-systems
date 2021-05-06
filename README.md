@@ -10,7 +10,7 @@
 
 #### Dependências 
 
-Antes de executar o programa você deve instalar a depedência paho-mqtt 
+Antes de executar o programa você deve instalar a depedência paho-mqtt. <br> 
 Dentro da pasta do seu projeto execute o seguinte comando
 
 > pip install paho-mqtt
@@ -19,14 +19,7 @@ Dentro da pasta do seu projeto execute o seguinte comando
 
 Para garantir que o programa execute corretamente, você precisa seguir uma ordem de iniciação dos processos
 
-1.
-> python3 calc_serve.py
-
-2.
-> python3 serv.py
-
-3.
-> python3 proessoB.py
-
-4.
-> python3 processoA.py
+1. python3 calc_serve.py
+2. python3 serv.py
+3. python3 processoB.py
+4. python3 processoA.py
