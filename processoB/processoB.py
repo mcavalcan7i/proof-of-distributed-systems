@@ -32,7 +32,7 @@ def on_message(client, userdata, msg):
 
 if __name__ == '__main__':
     client = mqtt.Client()
-    client.connect("localhost", 1883, 60)
+    client.connect("172.17.0.1", 1883, 60)
     client.on_connect = on_connect
     client.on_message = on_message
     client.loop_forever()
@@ -115,7 +115,7 @@ for i in range(len(teste2)):
 while True:
     for i in range(len(teste2)):
         mensagem_envio = teste2[i]
-        cliente.sendto(mensagem_envio.encode(), ("localhost", 33000))
+        cliente.sendto(mensagem_envio.encode(), ("172.17.0.3", 33000))
         mensagem_bytes, endereco_ip_servidor = cliente.recvfrom(2048)
 
     break

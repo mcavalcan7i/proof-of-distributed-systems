@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 import random
 
-MQTT_URL = "127.0.0.1"
+MQTT_URL = "172.17.0.1"
 MQTT_PORT = 1883
 
 # Estados

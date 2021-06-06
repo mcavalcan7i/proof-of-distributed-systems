@@ -1,11 +1,19 @@
 import paho.mqtt.client as mqtt
 import socket
+from requests import get
+
+meuip = get("https://api.ipify.org").text
+meuhost = socket.gethostname()
+meuipinterno = socket.gethostbyname(meuhost)
+print(meuip)
+print(meuhost)
+print(meuipinterno)
 
 servidor = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 servidor.bind(("", 33000))
 
 client = mqtt.Client()
-client.connect("localhost", 1883, 60)
+client.connect("172.17.0.1", 1883, 60)
 
 lista = []
 listaA = []
@@ -26,6 +34,7 @@ while True:
         lista.append(msg)
 
 
+print("Sai do loop")
 for i in range(len(lista)):
     if "x" in lista[i]:
         v = lista[i].replace('x', '')
